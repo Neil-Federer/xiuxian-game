@@ -242,13 +242,35 @@ function addLog(text, type = '') {
     entry.className = `log-entry ${type}`;
     entry.textContent = `[${game.time.year}年${SEASONS[game.time.quarter]}] ${text}`;
     ui.logPanel.appendChild(entry);
-    // 确保滚动到底部（移动端兼容）
+    
+    // 强制滚动到底部（移动端兼容）
+    const scrollToBottom = () => {
+        const panel = ui.logPanel;
+        if (!panel) return;
+        
+        // 方法1: 直接设置scrollTop
+        const targetScroll = panel.scrollHeight - panel.clientHeight;
+        panel.scrollTop = targetScroll;
+        
+        // 方法2: 使用scrollTo（更可靠）
+        panel.scrollTo(0, panel.scrollHeight);
+        
+        // 方法3: 使用scrollTop = scrollHeight（兼容性最好）
+        panel.scrollTop = panel.scrollHeight;
+    };
+    
+    // 立即滚动
+    scrollToBottom();
+    
+    // DOM更新后滚动（使用双重requestAnimationFrame确保渲染完成）
     requestAnimationFrame(() => {
-        ui.logPanel.scrollTop = ui.logPanel.scrollHeight;
-        // 双重保险：延迟再次滚动，确保移动端生效
-        setTimeout(() => {
-            ui.logPanel.scrollTop = ui.logPanel.scrollHeight;
-        }, 100);
+        requestAnimationFrame(() => {
+            scrollToBottom();
+            // 延迟滚动，确保移动端浏览器完成布局
+            setTimeout(scrollToBottom, 10);
+            setTimeout(scrollToBottom, 50);
+            setTimeout(scrollToBottom, 150);
+        });
     });
 }
 

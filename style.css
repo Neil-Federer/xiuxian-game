@@ -118,8 +118,11 @@ body {
     background: rgba(255, 255, 255, 0.8);
     padding: 15px;
     overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
     font-size: 1.1em;
     line-height: 1.6;
+    scroll-behavior: auto;
 }
 
 .log-content {
@@ -393,6 +396,10 @@ input[type="text"] {
         max-height: 280px;
         font-size: 0.95em;
         padding: 12px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
+        scroll-behavior: auto;
     }
 
     .log-entry {
