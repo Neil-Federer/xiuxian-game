@@ -67,6 +67,7 @@ body {
 
 .progress-bar {
     flex-grow: 1;
+    min-width: 0; /* 防止 flex 子项溢出 */
     height: 20px;
     background: #e0e0e0;
     border: 1px solid var(--border-color);
@@ -291,4 +292,183 @@ input[type="text"] {
 
 .choice-btn:hover {
     background: #ffe0b2;
+}
+
+/* ========== 移动端适配 ========== */
+@media screen and (max-width: 768px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        padding: 10px 0;
+        overflow-x: hidden;
+    }
+
+    .game-container {
+        width: 100%;
+        max-width: none;
+        height: auto;
+        min-height: 95vh;
+        padding: 12px;
+        margin: 0 auto;
+    }
+
+    /* 顶部栏：垂直排列 */
+    .game-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .player-info {
+        font-size: 1em;
+        text-align: center;
+    }
+
+    .qi-container {
+        width: 100%;
+    }
+
+    .qi-label {
+        font-size: 0.95em;
+    }
+
+    /* 主内容：单列垂直堆叠 */
+    .main-content {
+        flex-direction: column;
+        overflow: visible;
+        gap: 12px;
+    }
+
+    .stats-panel,
+    .action-panel {
+        width: 100%;
+        min-width: 0;
+        padding: 12px;
+    }
+
+    .stats-panel h3 {
+        font-size: 1.1em;
+    }
+
+    .stat-item {
+        font-size: 1em;
+    }
+
+    .stat-name,
+    .stat-value {
+        font-size: 1em;
+    }
+
+    .log-panel {
+        min-height: 180px;
+        max-height: 280px;
+        font-size: 0.95em;
+        padding: 12px;
+    }
+
+    .log-entry {
+        font-size: 0.95em;
+        line-height: 1.5;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .date-display {
+        font-size: 1.1em;
+    }
+
+    .ap-display {
+        font-size: 1em;
+    }
+
+    /* 行动按钮：单列，增大点击区域 */
+    .action-buttons {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .action-btn {
+        padding: 14px 10px;
+        font-size: 1.05em;
+        min-height: 48px;
+    }
+
+    .icon {
+        font-size: 1.4em;
+    }
+
+    /* 弹窗适配 */
+    .modal-content {
+        min-width: 0;
+        width: 92%;
+        max-width: 92vw;
+        padding: 20px 16px;
+        margin: 10px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-content h2,
+    .modal-content h3 {
+        font-size: 1.2em;
+    }
+
+    .form-group {
+        margin: 16px 0;
+    }
+
+    .form-group input {
+        width: 100%;
+        font-size: 16px; /* 防止 iOS 自动缩放 */
+    }
+
+    .stat-alloc {
+        padding: 0 10px;
+        margin: 8px 0;
+        font-size: 1em;
+    }
+
+    .alloc-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1em;
+    }
+
+    .btn-primary {
+        padding: 12px 24px;
+        font-size: 1.1em;
+    }
+
+    .choices-container .choice-btn {
+        padding: 14px;
+        font-size: 1em;
+        min-height: 44px;
+    }
+
+    #event-description {
+        font-size: 1em;
+        line-height: 1.6;
+        word-wrap: break-word;
+    }
+}
+
+/* 超小屏优化 */
+@media screen and (max-width: 380px) {
+    .game-container {
+        padding: 8px;
+    }
+
+    .player-info .divider {
+        margin: 0 4px;
+    }
+
+    .log-panel {
+        min-height: 150px;
+        max-height: 220px;
+    }
+
+    .action-btn {
+        padding: 12px 8px;
+        font-size: 0.95em;
+    }
 }
