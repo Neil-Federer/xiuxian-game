@@ -114,6 +114,8 @@ body {
 
 .log-panel {
     flex: 1;
+    min-height: 0; /* 重要：允许flex子项缩小 */
+    max-height: 100%; /* 限制最大高度 */
     border: 1px solid var(--border-color);
     background: rgba(255, 255, 255, 0.8);
     padding: 15px;
@@ -123,12 +125,16 @@ body {
     font-size: 1.1em;
     line-height: 1.6;
     scroll-behavior: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .log-content {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    flex: 1;
+    overflow-y: visible;
 }
 
 .log-entry {
@@ -392,14 +398,23 @@ input[type="text"] {
     }
 
     .log-panel {
+        flex: 1 1 auto;
         min-height: 180px;
         max-height: 280px;
+        height: 280px; /* 固定高度，确保不会增长 */
         font-size: 0.95em;
         padding: 12px;
-        overflow-y: auto;
+        overflow-y: auto !important;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
         scroll-behavior: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .log-content {
+        flex: 1;
+        overflow-y: visible;
     }
 
     .log-entry {

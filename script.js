@@ -248,28 +248,49 @@ function addLog(text, type = '') {
         const panel = ui.logPanel;
         if (!panel) return;
         
-        // 方法1: 直接设置scrollTop
-        const targetScroll = panel.scrollHeight - panel.clientHeight;
-        panel.scrollTop = targetScroll;
+        // 计算应该滚动到的位置
+        const scrollHeight = panel.scrollHeight;
+        const clientHeight = panel.clientHeight;
+        const maxScroll = scrollHeight - clientHeight;
         
-        // 方法2: 使用scrollTo（更可靠）
-        panel.scrollTo(0, panel.scrollHeight);
+        // 强制设置scrollTop到最大值
+        if (maxScroll > 0) {
+            panel.scrollTop = maxScroll;
+        } else {
+            panel.scrollTop = scrollHeight;
+        }
         
-        // 方法3: 使用scrollTop = scrollHeight（兼容性最好）
-        panel.scrollTop = panel.scrollHeight;
+        // 使用scrollTo作为备用方法
+        try {
+            panel.scrollTo({
+                top: panel.scrollHeight,
+                left: 0,
+                behavior: 'auto'
+            });
+        } catch (e) {
+            // 如果scrollTo不支持，使用scrollTop
+            panel.scrollTop = panel.scrollHeight;
+        }
     };
     
-    // 立即滚动
+    // 立即尝试滚动
     scrollToBottom();
     
     // DOM更新后滚动（使用双重requestAnimationFrame确保渲染完成）
     requestAnimationFrame(() => {
+        scrollToBottom();
         requestAnimationFrame(() => {
             scrollToBottom();
-            // 延迟滚动，确保移动端浏览器完成布局
-            setTimeout(scrollToBottom, 10);
-            setTimeout(scrollToBottom, 50);
-            setTimeout(scrollToBottom, 150);
+            // 多次延迟滚动，确保移动端浏览器完成布局和渲染
+            setTimeout(() => {
+                scrollToBottom();
+                setTimeout(() => {
+                    scrollToBottom();
+                    setTimeout(() => {
+                        scrollToBottom();
+                    }, 100);
+                }, 50);
+            }, 10);
         });
     });
 }
