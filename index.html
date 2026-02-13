@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蛮荒修仙录</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 顶部信息栏 -->
+        <header class="game-header">
+            <div class="player-info">
+                <span id="player-name">道友</span>
+                <span class="divider">|</span>
+                <span id="player-realm">凡人</span>
+                <span class="divider">|</span>
+                <span id="player-age">0岁</span>
+            </div>
+            <div class="qi-container">
+                <div class="qi-label">灵气进度:</div>
+                <div class="progress-bar">
+                    <div id="qi-bar" class="progress-fill" style="width: 0%"></div>
+                    <span id="qi-text">0/100</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- 左侧属性面板 -->
+            <aside class="stats-panel">
+                <h3>人物属性</h3>
+                <div class="stat-group">
+                    <div class="stat-item" title="影响生命值">
+                        <span class="stat-name">体魄:</span>
+                        <span id="stat-constitution" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item" title="影响防御力">
+                        <span class="stat-name">根骨:</span>
+                        <span id="stat-rootbone" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item" title="影响攻击力和灵力值">
+                        <span class="stat-name">灵力:</span>
+                        <span id="stat-spirit" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item" title="影响暴击率">
+                        <span class="stat-name">福运:</span>
+                        <span id="stat-luck" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item" title="影响出手速度">
+                        <span class="stat-name">速度:</span>
+                        <span id="stat-speed" class="stat-value">0</span>
+                    </div>
+                </div>
+                
+                <div class="divider-line"></div>
+
+                <div class="derived-stats">
+                    <div class="stat-item">
+                        <span class="stat-name">生命:</span>
+                        <span id="attr-hp">0/0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-name">防御:</span>
+                        <span id="attr-def">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-name">攻击:</span>
+                        <span id="attr-atk">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-name">修炼:</span>
+                        <span id="attr-cultivation">0/季</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-name">灵根:</span>
+                        <span id="attr-root">未知</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 中间日志面板 -->
+            <main class="log-panel">
+                <div id="game-log" class="log-content">
+                    <div class="log-entry system">欢迎来到蛮荒世界，请创建你的修仙角色...</div>
+                </div>
+            </main>
+
+            <!-- 右侧行动面板 -->
+            <aside class="action-panel">
+                <div class="date-display">
+                    <span id="current-year">第1年</span>
+                    <span id="current-season">春季</span>
+                </div>
+                <div class="ap-display">
+                    行动点: <span id="action-points">3</span>/3
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn" data-action="retreat" title="潜心修炼，获取大量灵气">
+                        <span class="icon">🧘</span> 闭关
+                    </button>
+                    <button class="action-btn" data-action="adventure" title="外出历练，机遇与危险并存">
+                        <span class="icon">🏔️</span> 历练
+                    </button>
+                    <button class="action-btn" data-action="visit" title="拜访道友，交流心得">
+                        <span class="icon">🍵</span> 访友
+                    </button>
+                    <button class="action-btn" data-action="comprehend" title="感悟天地，提升心境">
+                        <span class="icon">📜</span> 参悟
+                    </button>
+                    <button class="action-btn" data-action="play" title="放松心情，可能有意外收获">
+                        <span class="icon">🎲</span> 玩乐
+                    </button>
+                    <button class="action-btn" data-action="date" title="寻找机缘，结识伴侣">
+                        <span class="icon">💕</span> CPDD
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- 角色创建弹窗 -->
+    <div id="modal-creation" class="modal">
+        <div class="modal-content">
+            <h2>踏入仙途</h2>
+            <div class="form-group">
+                <label>道号：</label>
+                <input type="text" id="input-name" placeholder="请输入名字" maxlength="6">
+                <button id="btn-random-name">随机</button>
+            </div>
+            <div class="creation-stats">
+                <p>初始属性点分配 (剩余: <span id="points-remaining">0</span>)</p>
+                <!-- 这里的滑块或加减号稍后在JS中动态生成或静态写死 -->
+                <div class="stat-alloc">
+                    <label>体魄</label> <button class="alloc-btn minus" data-stat="con">-</button> <span id="alloc-con">10</span> <button class="alloc-btn plus" data-stat="con">+</button>
+                </div>
+                <div class="stat-alloc">
+                    <label>根骨</label> <button class="alloc-btn minus" data-stat="root">-</button> <span id="alloc-root">10</span> <button class="alloc-btn plus" data-stat="root">+</button>
+                </div>
+                <div class="stat-alloc">
+                    <label>灵力</label> <button class="alloc-btn minus" data-stat="spirit">-</button> <span id="alloc-spirit">10</span> <button class="alloc-btn plus" data-stat="spirit">+</button>
+                </div>
+                <div class="stat-alloc">
+                    <label>福运</label> <button class="alloc-btn minus" data-stat="luck">-</button> <span id="alloc-luck">10</span> <button class="alloc-btn plus" data-stat="luck">+</button>
+                </div>
+                <div class="stat-alloc">
+                    <label>速度</label> <button class="alloc-btn minus" data-stat="speed">-</button> <span id="alloc-speed">10</span> <button class="alloc-btn plus" data-stat="speed">+</button>
+                </div>
+            </div>
+            <button id="btn-start-game" class="btn-primary">开始修仙</button>
+        </div>
+    </div>
+
+    <!-- 事件/战斗弹窗 -->
+    <div id="modal-event" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="event-title">事件标题</h3>
+            <div id="event-description">事件描述内容...</div>
+            <div id="event-choices" class="choices-container">
+                <!-- 动态生成选项 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
