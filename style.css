@@ -265,16 +265,23 @@ input[type="text"] {
     border-radius: 50%;
 }
 
+.creation-stats-header {
+    margin: 0 0 8px 0;
+}
+
 .alloc-random-btn {
-    margin-left: 10px;
-    padding: 4px 12px;
-    font-size: 0.9em;
+    display: block;
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 8px 16px;
+    font-size: 1em;
     background: var(--accent-color);
     color: white;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     cursor: pointer;
     font-family: var(--font-main);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .alloc-random-btn:hover {
@@ -438,17 +445,15 @@ input[type="text"] {
         font-size: 16px; /* 防止 iOS 自动缩放 */
     }
 
-    .creation-stats p {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 8px;
+    .creation-stats-header {
+        font-size: 1em;
     }
 
     .alloc-random-btn {
-        padding: 6px 14px;
-        font-size: 0.95em;
-        min-height: 36px;
+        padding: 12px 20px;
+        font-size: 1.05em;
+        min-height: 44px;
+        margin-bottom: 20px;
     }
 
     .stat-alloc {
