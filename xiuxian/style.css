@@ -1,0 +1,294 @@
+:root {
+    --bg-color: #F5F5DC;
+    --text-color: #333333;
+    --accent-color: #8B4513; /* SaddleBrown */
+    --highlight-color: #E34234; /* Vermilion */
+    --border-color: #5D4037;
+    --panel-bg: rgba(255, 255, 255, 0.6);
+    --font-main: "KaiTi", "STKaiti", "Microsoft YaHei", serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" transform="scale(0.5)" opacity="0.1" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.6" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-container {
+    width: 95%;
+    max-width: 1200px;
+    height: 90vh;
+    border: 4px double var(--border-color);
+    background-color: rgba(245, 245, 220, 0.9);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+/* Header */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 15px;
+}
+
+.player-info {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.divider {
+    margin: 0 10px;
+    color: var(--accent-color);
+}
+
+.qi-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 300px;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 20px;
+    background: #e0e0e0;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #8BC34A);
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+#qi-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8em;
+    color: #333;
+    text-shadow: 0 0 2px white;
+}
+
+/* Main Layout */
+.main-content {
+    display: flex;
+    flex: 1;
+    gap: 20px;
+    overflow: hidden;
+}
+
+/* Panels */
+.stats-panel, .action-panel {
+    width: 250px;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.log-panel {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    overflow-y: auto;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.log-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.log-entry {
+    padding: 5px;
+    border-bottom: 1px dashed #ccc;
+    animation: fadeIn 0.3s;
+}
+
+.log-entry.system { color: #555; font-style: italic; }
+.log-entry.combat { color: #D32F2F; }
+.log-entry.gain { color: #388E3C; }
+.log-entry.event { color: #1976D2; font-weight: bold; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Stats */
+.stat-group, .derived-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-name { font-weight: bold; color: var(--accent-color); }
+.divider-line {
+    height: 1px;
+    background: var(--border-color);
+    margin: 15px 0;
+}
+
+/* Actions */
+.date-display {
+    text-align: center;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.ap-display {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 10px 5px;
+    background: #fff8e1;
+    border: 1px solid var(--accent-color);
+    cursor: pointer;
+    font-family: var(--font-main);
+    font-size: 1em;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.action-btn:hover:not(:disabled) {
+    background: #ffe0b2;
+    transform: scale(1.02);
+}
+
+.action-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+.icon { font-size: 1.5em; }
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.hidden { display: none; }
+
+.modal-content {
+    background: var(--bg-color);
+    padding: 30px;
+    border: 4px solid var(--border-color);
+    border-radius: 8px;
+    min-width: 400px;
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.form-group { margin: 20px 0; }
+
+input[type="text"] {
+    padding: 8px;
+    font-size: 1em;
+    border: 1px solid var(--accent-color);
+    background: #fff;
+    font-family: var(--font-main);
+}
+
+.stat-alloc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 0 40px;
+}
+
+.alloc-btn {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+}
+
+.btn-primary {
+    margin-top: 20px;
+    padding: 10px 30px;
+    font-size: 1.2em;
+    background: var(--highlight-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-main);
+}
+
+.choices-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.choice-btn {
+    padding: 10px;
+    background: white;
+    border: 1px solid var(--accent-color);
+    cursor: pointer;
+}
+
+.choice-btn:hover {
+    background: #ffe0b2;
+}
