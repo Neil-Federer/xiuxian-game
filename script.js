@@ -26,7 +26,7 @@ class GameState {
     constructor() {
         this.player = {
             name: "",
-            age: 0, // 以季度为单位，计算时 /4
+            age: 56, // 以季度为单位，计算时 /4，初始14岁
             realmIdx: 0,
             currentQi: 0,
             stats: {
@@ -102,6 +102,7 @@ const ui = {
 
     // Logs
     logPanel: document.getElementById('game-log'),
+    logScroll: document.querySelector('.log-panel'), // 外层可滚动容器
 
     // Modals
     modalCreation: document.getElementById('modal-creation'),
@@ -242,56 +243,22 @@ function addLog(text, type = '') {
     entry.className = `log-entry ${type}`;
     entry.textContent = `[${game.time.year}年${SEASONS[game.time.quarter]}] ${text}`;
     ui.logPanel.appendChild(entry);
+    scrollLogToBottom();
+}
+
+function scrollLogToBottom() {
+    // 滚动外层 .log-panel 容器（它才是 overflow-y: auto 的元素）
+    const container = ui.logScroll;
+    if (!container) return;
     
-    // 强制滚动到底部（移动端兼容）
-    const scrollToBottom = () => {
-        const panel = ui.logPanel;
-        if (!panel) return;
-        
-        // 计算应该滚动到的位置
-        const scrollHeight = panel.scrollHeight;
-        const clientHeight = panel.clientHeight;
-        const maxScroll = scrollHeight - clientHeight;
-        
-        // 强制设置scrollTop到最大值
-        if (maxScroll > 0) {
-            panel.scrollTop = maxScroll;
-        } else {
-            panel.scrollTop = scrollHeight;
-        }
-        
-        // 使用scrollTo作为备用方法
-        try {
-            panel.scrollTo({
-                top: panel.scrollHeight,
-                left: 0,
-                behavior: 'auto'
-            });
-        } catch (e) {
-            // 如果scrollTo不支持，使用scrollTop
-            panel.scrollTop = panel.scrollHeight;
-        }
+    const doScroll = () => {
+        container.scrollTop = container.scrollHeight;
     };
     
-    // 立即尝试滚动
-    scrollToBottom();
-    
-    // DOM更新后滚动（使用双重requestAnimationFrame确保渲染完成）
+    doScroll();
     requestAnimationFrame(() => {
-        scrollToBottom();
-        requestAnimationFrame(() => {
-            scrollToBottom();
-            // 多次延迟滚动，确保移动端浏览器完成布局和渲染
-            setTimeout(() => {
-                scrollToBottom();
-                setTimeout(() => {
-                    scrollToBottom();
-                    setTimeout(() => {
-                        scrollToBottom();
-                    }, 100);
-                }, 50);
-            }, 10);
-        });
+        doScroll();
+        setTimeout(doScroll, 50);
     });
 }
 
