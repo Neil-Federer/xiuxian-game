@@ -242,7 +242,14 @@ function addLog(text, type = '') {
     entry.className = `log-entry ${type}`;
     entry.textContent = `[${game.time.year}年${SEASONS[game.time.quarter]}] ${text}`;
     ui.logPanel.appendChild(entry);
-    ui.logPanel.scrollTop = ui.logPanel.scrollHeight;
+    // 确保滚动到底部（移动端兼容）
+    requestAnimationFrame(() => {
+        ui.logPanel.scrollTop = ui.logPanel.scrollHeight;
+        // 双重保险：延迟再次滚动，确保移动端生效
+        setTimeout(() => {
+            ui.logPanel.scrollTop = ui.logPanel.scrollHeight;
+        }, 100);
+    });
 }
 
 function gainQi(amount, source) {
