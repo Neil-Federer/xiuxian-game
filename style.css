@@ -265,6 +265,22 @@ input[type="text"] {
     border-radius: 50%;
 }
 
+.alloc-random-btn {
+    margin-left: 10px;
+    padding: 4px 12px;
+    font-size: 0.9em;
+    background: var(--accent-color);
+    color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-main);
+}
+
+.alloc-random-btn:hover {
+    background: #6d3a0f;
+}
+
 .btn-primary {
     margin-top: 20px;
     padding: 10px 30px;
@@ -420,6 +436,19 @@ input[type="text"] {
     .form-group input {
         width: 100%;
         font-size: 16px; /* 防止 iOS 自动缩放 */
+    }
+
+    .creation-stats p {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .alloc-random-btn {
+        padding: 6px 14px;
+        font-size: 0.95em;
+        min-height: 36px;
     }
 
     .stat-alloc {

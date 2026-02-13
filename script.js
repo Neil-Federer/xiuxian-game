@@ -154,6 +154,21 @@ function bindCreationLogic() {
         document.getElementById('input-name').value = names[Math.floor(Math.random() * names.length)];
     });
 
+    document.getElementById('btn-random-stats').addEventListener('click', () => {
+        // 重置为基础值
+        tempStats = { con: 10, root: 10, spirit: 10, luck: 10, speed: 10 };
+        points = 20;
+        // 将 20 点随机分配到各属性（每项不超过 20）
+        for (let i = 0; i < 20; i++) {
+            const available = stats.filter(s => tempStats[s] < limits.max);
+            const stat = available[Math.floor(Math.random() * available.length)];
+            tempStats[stat]++;
+            points--;
+        }
+        points = 0;
+        updateDisplay();
+    });
+
     document.getElementById('btn-start-game').addEventListener('click', () => {
         const name = document.getElementById('input-name').value.trim() || "无名氏";
         if (points !== 0) {
