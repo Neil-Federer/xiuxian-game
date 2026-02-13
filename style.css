@@ -114,31 +114,24 @@ body {
 
 .log-panel {
     flex: 1;
-    min-height: 0; /* 重要：允许flex子项缩小 */
-    max-height: 100%; /* 限制最大高度 */
+    min-height: 0;
     border: 1px solid var(--border-color);
     background: rgba(255, 255, 255, 0.8);
     padding: 15px;
     overflow-y: auto;
     overflow-x: hidden;
-    -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
+    -webkit-overflow-scrolling: touch;
     font-size: 1.1em;
     line-height: 1.6;
-    scroll-behavior: auto;
-    display: flex;
-    flex-direction: column;
 }
 
 .log-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1;
-    overflow-y: visible;
+    display: block;
 }
 
 .log-entry {
-    padding: 5px;
+    padding: 5px 0;
+    margin-bottom: 8px;
     border-bottom: 1px dashed #ccc;
     animation: fadeIn 0.3s;
 }
@@ -398,23 +391,13 @@ input[type="text"] {
     }
 
     .log-panel {
-        flex: 1 1 auto;
-        min-height: 180px;
-        max-height: 280px;
-        height: 280px; /* 固定高度，确保不会增长 */
+        flex: none;
+        height: 280px;
         font-size: 0.95em;
         padding: 12px;
-        overflow-y: auto !important;
+        overflow-y: scroll;
         overflow-x: hidden;
-        -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
-        scroll-behavior: auto;
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .log-content {
-        flex: 1;
-        overflow-y: visible;
+        -webkit-overflow-scrolling: touch;
     }
 
     .log-entry {
@@ -544,8 +527,7 @@ input[type="text"] {
     }
 
     .log-panel {
-        min-height: 150px;
-        max-height: 220px;
+        height: 220px;
     }
 
     .action-btn {

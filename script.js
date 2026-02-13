@@ -403,11 +403,11 @@ function checkTurnEnd() {
 }
 
 function nextQuarter() {
+    game.player.age++; // 每季度+1，显示时 /4 得到年龄
     game.time.quarter++;
     if (game.time.quarter >= 4) {
         game.time.quarter = 0;
         game.time.year++;
-        game.player.age += 4; // 每年加4岁（逻辑上季度累计）
         game.eventsThisYear = 0; // 重置年度事件计数
         addLog(`=== 第${game.time.year}年到了 ===`, 'system');
         
@@ -415,8 +415,6 @@ function nextQuarter() {
         if (game.time.year > 1) {
             triggerAnnualEvent();
         }
-    } else {
-        game.player.age++;
     }
 
     game.actionPoints = 3;
